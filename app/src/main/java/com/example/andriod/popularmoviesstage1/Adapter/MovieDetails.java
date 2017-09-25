@@ -11,10 +11,10 @@ public class MovieDetails {
     private String moviePoster;
     private String overview;
     private String userRating;
-    private Date releaseDate;
+    private String releaseDate;
     private int movieID;
 
-    public MovieDetails(String title, String moviePoster, String overview, String userRating, Date releaseDate, int movieID) {
+    public MovieDetails(String title, String moviePoster, String overview, String userRating, String releaseDate, int movieID) {
         this.title = title;
         this.moviePoster = moviePoster;
         this.overview = overview;
@@ -55,11 +55,11 @@ public class MovieDetails {
         this.userRating = userRating;
     }
 
-    public Date getReleaseDate() {
+    public String getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(Date releaseDate) {
+    public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
     }
 

@@ -1,40 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.andriod.popularmoviesstage1.MainActivity">
 
-    <!--<GridView-->
-        <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-        <!--xmlns:tools="http://schemas.android.com/tools"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:columnWidth="150dp"-->
-        <!--android:numColumns="auto_fit"-->
-        <!--android:verticalSpacing="0dp"-->
-        <!--android:horizontalSpacing="0dp"-->
-        <!--android:stretchMode="columnWidth"-->
-        <!--tools:context=".MainActivityFragment"-->
-        <!--android:id="@+id/movies_grid">-->
-    <!--</GridView>-->
+    <GridView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="0dp"
+        android:horizontalSpacing="0dp"
+        android:stretchMode="columnWidth"
+        android:id="@+id/movies_grid"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp">
+    </GridView>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/error_message_display"
         android:padding="16dp"
-        android:text="An error has occured. Please try again by clicking refresh"
+        android:text="Please check your internet connection and try again"
         android:textSize="20sp"
-        android:visibility="invisible"/>
+        android:layout_gravity = "center"
+        android:visibility="invisible"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="0dp" />
 
     <ProgressBar
         android:id="@+id/pb_loading_indicator"
-        android:layout_height="42dp"
-        android:layout_width="42dp"
+        android:layout_height="48dp"
+        android:layout_width="48dp"
         android:layout_gravity = "center"
         android:visibility="invisible"
-        />
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="0dp" />
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

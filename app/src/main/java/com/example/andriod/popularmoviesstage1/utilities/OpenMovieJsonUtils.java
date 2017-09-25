@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public final class OpenMovieJsonUtils {
      *
      * @throws JSONException If JSON data cannot be properly parsed
      */
-    public static String[] getSimpleWeatherStringsFromJson(Context context, String movieDataJsonStr, ArrayList<MovieDetails> movieDetailsList)
+    public static ArrayList<MovieDetails> getSimpleWeatherStringsFromJson(Context context, String movieDataJsonStr)
             throws JSONException {
 
         final String OMD_RESULTS = "results";
@@ -41,24 +42,11 @@ public final class OpenMovieJsonUtils {
         final String OMD_POSTER_PATH = "poster_path";
         final String OMD_OVERVIEW = "overview";
         final String OMD_RELEASE_DATE = "release_date";
+        final String OMD_RATING = "vote_average";
 
         final String OMD_MESSAGE_CODE = "cod";
         String name = null;
-//
-//        /* Weather information. Each day's forecast info is an element of the "list" array */
-//        final String OWM_LIST = "list";
-//
-//
-//        /* All temperatures are children of the "temp" object */
-//        final String OWM_TEMPERATURE = "temp";
-//
-//        /* Max temperature for the day */
-//        final String OWM_MAX = "max";
-//        final String OWM_MIN = "min";
-//
-//        final String OWM_WEATHER = "weather";
-//        final String OWM_DESCRIPTION = "main";
-
+        ArrayList<MovieDetails> movieDetailsList = new ArrayList<MovieDetails>();
 
 
         /* String array to hold each day's weather String */
@@ -84,51 +72,21 @@ public final class OpenMovieJsonUtils {
 
         JSONArray MovieDataArray = movieDataJson.getJSONArray(OMD_RESULTS);
 
-        //parsedWeatherData = new String[weatherArray.length()];
 
         long localDate = System.currentTimeMillis();
         for (int i = 0; i < MovieDataArray.length(); i++) {
-//            String date;
-//            String highAndLow;
-//
-//            /* These are the values that will be collected */
-//            long dateTimeMillis;
-//            double high;
-//            double low;
-//            String description;
-//
-//            /* Get the JSON object representing the day */
-//            JSONObject dayForecast = weatherArray.getJSONObject(i);
-//
-//            /*
-//             * We ignore all the datetime values embedded in the JSON and assume that
-//             * the values are returned in-order by day (which is not guaranteed to be correct).
-//             */
-//
-//            /*
-//             * Description is in a child array called "weather", which is 1 element long.
-//             * That element also contains a weather code.
-//             */
-//            JSONObject weatherObject =
-//                    dayForecast.getJSONArray(OWM_WEATHER).getJSONObject(0);
-//            description = weatherObject.getString(OWM_DESCRIPTION);
-//
-//            /*
-//             * Temperatures are sent by Open Weather Map in a child object called "temp".
-//             *
-//             * Editor's Note: Try not to name variables "temp" when working with temperature.
-//             * It confuses everybody. Temp could easily mean any number of things, including
-//             * temperature, temporary and is just a bad variable name.
-//             */
-//            JSONObject temperatureObject = dayForecast.getJSONObject(OWM_TEMPERATURE);
-//            high = temperatureObject.getDouble(OWM_MAX);
-//            low = temperatureObject.getDouble(OWM_MIN);
-//
-//
-//            parsedWeatherData[i] =  description;
+            JSONObject singleMovieDetail = MovieDataArray.getJSONObject(i);
+            String title = singleMovieDetail.getString(OMD_TITLE);
+            String moviePoster = singleMovieDetail.getString(OMD_POSTER_PATH);
+            String overview = singleMovieDetail.getString(OMD_OVERVIEW);
+            String userRating = singleMovieDetail.getString(OMD_RATING);
+            String releaseDate = singleMovieDetail.getString(OMD_RELEASE_DATE);
+            int movieID = singleMovieDetail.getInt(OMD_ID);
+
+            movieDetailsList.add(i, new MovieDetails(title, moviePoster, overview, userRating,releaseDate,movieID));
         }
 
-        return parsedWeatherData;
+        return movieDetailsList;
     }
 
 }
