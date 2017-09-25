@@ -1,12 +1,16 @@
 package com.example.andriod.popularmoviesstage1.Adapter;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
  * Created by Deepak on 9/23/2017.
  */
 
-public class MovieDetails {
+public class MovieDetails implements Parcelable {
     private String title;
     private String moviePoster;
     private String overview;
@@ -21,6 +25,15 @@ public class MovieDetails {
         this.userRating = userRating;
         this.releaseDate = releaseDate;
         this.movieID = movieID;
+    }
+
+    private MovieDetails(Parcel in){
+        title = in.readString();
+        moviePoster = in.readString();
+        overview = in.readString();
+        userRating = in.readString();
+        releaseDate = in.readString();
+        movieID = in.readInt();
     }
 
     public String getTitle() {
@@ -70,4 +83,24 @@ public class MovieDetails {
     public void setMovieID(int movieID) {
         this.movieID = movieID;
     }
+
+    public int describeContents(){ return 0;}
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(title);
+        parcel.writeString(moviePoster);
+        parcel.writeString(overview);
+        parcel.writeString(userRating);
+        parcel.writeString(releaseDate);
+        parcel.writeInt(movieID);
+    }
+
+    public final Parcelable.Creator<MovieDetails> CREATOR = new Parcelable.Creator<MovieDetails>() {
+        @Override
+        public MovieDetails createFromParcel(Parcel parcel) {return new MovieDetails(parcel);}
+
+        @Override
+        public MovieDetails[] newArray(int i) {return new MovieDetails[i];}
+    };
 }

@@ -22,42 +22,51 @@ import com.squareup.picasso.Picasso;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String API_Key = "534dc6269e7da747bd1aad7cfd13b2bb";
-    private TextView mErrorMessageDisplay;
-    private static ArrayList<MovieDetails> movieDetailsList;
-    private GridView mGridView;
-    private MovieDetailsAdapter movieDetailsAdapter;
-    Context context;
+    private static final String MOVIEDB_URL_POPULAR = "http://api.themoviedb.org/3/movie/popular?api_key=";
+    private static final String MOVIEDB_URL_RATING = "http://api.themoviedb.org/3/movie/top_rated?api_key=";
 
+    private GridView mGridView;
+    private TextView mErrorMessageDisplay;
     private ProgressBar mLoadingIndicator;
+
+    private static ArrayList<MovieDetails> movieDetailsList;
+    private MovieDetailsAdapter movieDetailsAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         mErrorMessageDisplay = (TextView) findViewById(R.id.error_message_display);
         mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
         mGridView = (GridView) findViewById(R.id.movies_grid);
-        context = this ;
+        if(savedInstanceState == null || !savedInstanceState.containsKey("movieDataList")) {
+            movieDetailsList = new ArrayList<MovieDetails>();
+            loadMoviesData();
 
+        }
+        else {
+            movieDetailsList = savedInstanceState.getParcelableArrayList("movieDataList");
+            updateView(movieDetailsList);
+        }
 
-        movieDetailsList = new ArrayList<MovieDetails>();
-        updateView(movieDetailsList);
+    }
 
-        loadMoviesData();
-
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArrayList("movieDataList", movieDetailsList);
+        super.onSaveInstanceState(outState);
     }
 
     private void loadMoviesData()
     {
         showMoviesDataView();
-
-        new FetchMovieData().execute("http://api.themoviedb.org/3/movie/popular?api_key="+API_Key);
+        new FetchMovieData().execute(MOVIEDB_URL_POPULAR+API_Key);
 
     }
 
@@ -144,11 +153,11 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.sort_by_pop) {
-            new FetchMovieData().execute("http://api.themoviedb.org/3/movie/popular?api_key="+API_Key);
+            new FetchMovieData().execute(MOVIEDB_URL_POPULAR+API_Key);
             return true;
         }
         if (id == R.id.sort_by_rating) {
-            new FetchMovieData().execute("http://api.themoviedb.org/3/movie/top_rated?api_key="+API_Key);
+            new FetchMovieData().execute(MOVIEDB_URL_RATING+API_Key);
             return true;
         }
 

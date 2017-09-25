@@ -51,10 +51,6 @@ public class MovieDetailsAdapter extends ArrayAdapter<MovieDetails> {
         ImageView iconView = (ImageView) convertView.findViewById(R.id.list_item_icon);
         String posterPath = currentMovieDetail.getMoviePoster();
         Picasso.with(mContext).load(BASE_URL + SIZE + posterPath).into(iconView);
-        //Picasso.with(context).load(url).into(iconView);
-        // Get the image resource ID from the current AndroidFlavor object and
-        // set the image to iconView
-        //iconView.setImageResource(currentMovieDetail.getMoviePoster());
 
         // Return the whole list item layout (containing 2 TextViews and an ImageView)
         // so that it can be shown in the ListView
