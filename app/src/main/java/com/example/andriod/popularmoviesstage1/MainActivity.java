@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
         //Get a reference to the gridView and attach the adapter to it
         GridView mGridView = (GridView) findViewById(R.id.movies_grid);
         mGridView.setAdapter(movieDetailsAdapter);
+        //movieDetailsAdapter.notifyDataSetChanged();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -143,11 +144,11 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.sort_by_pop) {
-
+            new FetchMovieData().execute("http://api.themoviedb.org/3/movie/popular?api_key="+API_Key);
             return true;
         }
         if (id == R.id.sort_by_rating) {
-
+            new FetchMovieData().execute("http://api.themoviedb.org/3/movie/top_rated?api_key="+API_Key);
             return true;
         }
 

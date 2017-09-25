@@ -22,7 +22,7 @@ public class MovieDetailsAdapter extends ArrayAdapter<MovieDetails> {
 
     private static final String LOG_TAG = MovieDetailsAdapter.class.getSimpleName();
     private static final String BASE_URL = "http://image.tmdb.org/t/p/";
-    private static final String SIZE = "w780";
+    private static final String SIZE = "w185";
     private Context mContext;
 
 

@@ -12,13 +12,12 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:columnWidth="150dp"
         android:numColumns="auto_fit"
         android:verticalSpacing="0dp"
         android:horizontalSpacing="0dp"
         android:stretchMode="columnWidth"
-        android:id="@+id/movies_grid"
-        tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp">
+        android:id="@+id/movies_grid">
     </GridView>
 
     <TextView
