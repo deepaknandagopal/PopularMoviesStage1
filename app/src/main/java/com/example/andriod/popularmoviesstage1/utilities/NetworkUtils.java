@@ -10,7 +10,7 @@ import java.util.Scanner;
  * Helper class created for getting response from the web.
  */
 
-public final class NetworkUtils {
+final class NetworkUtils {
 
     @SuppressWarnings("unused")
     private static final String TAG = NetworkUtils.class.getSimpleName();

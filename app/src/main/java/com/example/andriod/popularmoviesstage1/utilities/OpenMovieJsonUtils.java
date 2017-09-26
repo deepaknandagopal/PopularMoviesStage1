@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * Helper class created for parsing the json response from the web.
  */
 
-public final class OpenMovieJsonUtils {
+final class OpenMovieJsonUtils {
 
     /**
      * This method parses JSON from a web response and returns an ArrayList of the MovieDetails Objects array of Strings
