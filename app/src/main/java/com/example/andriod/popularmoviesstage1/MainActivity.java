@@ -1,6 +1,5 @@
 package com.example.andriod.popularmoviesstage1;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -19,22 +17,18 @@ import com.example.andriod.popularmoviesstage1.Adapter.MovieDetails;
 import com.example.andriod.popularmoviesstage1.Adapter.MovieDetailsAdapter;
 import com.example.andriod.popularmoviesstage1.utilities.NetworkUtils;
 import com.example.andriod.popularmoviesstage1.utilities.OpenMovieJsonUtils;
-import com.squareup.picasso.Picasso;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
 
-    //Initilize the API Key here to retrieve the data from the themoviedb.org API
-    private static final String API_Key = "534dc6269e7da747bd1aad7cfd13b2bb";
+    //Initialize the API Key here to retrieve the data from the themoviedb.org API
+    private static final String API_Key = "";
 
     //URL for retrieving the movies list by popular and top-rated
-    private static final String MOVIEDB_URL_POPULAR = "http://api.themoviedb.org/3/movie/popular?api_key=";
-    private static final String MOVIEDB_URL_RATING = "http://api.themoviedb.org/3/movie/top_rated?api_key=";
+    private static final String MOVIE_DB_URL_POPULAR = "http://api.themoviedb.org/3/movie/popular?api_key=";
+    private static final String MOVIE_DB_URL_RATING = "http://api.themoviedb.org/3/movie/top_rated?api_key=";
 
     private GridView mGridView;
     private TextView mErrorMessageDisplay;
@@ -53,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         mGridView = (GridView) findViewById(R.id.movies_grid);
         if(savedInstanceState == null || !savedInstanceState.containsKey("movieDataList")) {
             //If there is no savedInstance then create a object and call loadMoviesData to fetch
-            movieDetailsList = new ArrayList<MovieDetails>();
+            movieDetailsList = new ArrayList<>();
             loadMoviesData();
         }
         else {
@@ -76,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
     private void loadMoviesData()
     {
         showMoviesDataView();
-        new FetchMovieData().execute(MOVIEDB_URL_POPULAR+API_Key);
+        new FetchMovieData().execute(MOVIE_DB_URL_POPULAR+API_Key);
 
     }
 
@@ -100,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Async Task to fetch the data in the background
-    public class FetchMovieData extends AsyncTask<String, Void, ArrayList<MovieDetails>> {
+    private class FetchMovieData extends AsyncTask<String, Void, ArrayList<MovieDetails>> {
 
         @Override
         protected void onPreExecute() {
@@ -128,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
                         .getResponseFromHttpUrl(url);
 
                 movieDetailsList = OpenMovieJsonUtils
-                        .getSimpleWeatherStringsFromJson(MainActivity.this, jsonMovieAPIResponse);
+                        .getSimpleWeatherStringsFromJson(jsonMovieAPIResponse);
 
                 return movieDetailsList;
 
@@ -141,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<MovieDetails> movieData){
             mLoadingIndicator.setVisibility(View.INVISIBLE);
-            //Update the Gridview if the MovieDetails list is not null
+            //Update the GridView if the MovieDetails list is not null
             if(movieData!=null)
             {
                 showMoviesDataView();
@@ -157,11 +151,11 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Method to update the GridView and attach an adapter to it
-     * This also set an OnItemClickListner for the GridView
+     * This also set an OnItemClickListener for the GridView
      *
-     * @param movieData Arraylist of MovieDetails Object
+     * @param movieData ArrayList of MovieDetails Object
      */
-    public void updateView(ArrayList<MovieDetails> movieData){
+    private void updateView(ArrayList<MovieDetails> movieData){
         movieDetailsAdapter = new MovieDetailsAdapter(this, movieData);
         //Get a reference to the gridView and attach the adapter to it
         GridView mGridView = (GridView) findViewById(R.id.movies_grid);
@@ -170,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //Get the MovieDetails Object and pass it to the new activity as parcelble object
+                //Get the MovieDetails Object and pass it to the new activity as parcelable object
                 MovieDetails movieDetails = movieDetailsAdapter.getItem(i);
                 Intent intent = new Intent(MainActivity.this,MovieDetailActivity.class);
                 intent.putExtra("movieDetails",movieDetails);
@@ -191,11 +185,11 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.sort_by_pop) {
-            new FetchMovieData().execute(MOVIEDB_URL_POPULAR+API_Key);
+            new FetchMovieData().execute(MOVIE_DB_URL_POPULAR+API_Key);
             return true;
         }
         if (id == R.id.sort_by_rating) {
-            new FetchMovieData().execute(MOVIEDB_URL_RATING+API_Key);
+            new FetchMovieData().execute(MOVIE_DB_URL_RATING+API_Key);
             return true;
         }
 

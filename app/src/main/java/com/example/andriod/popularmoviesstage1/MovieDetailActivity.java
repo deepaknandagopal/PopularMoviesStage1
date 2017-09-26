@@ -15,17 +15,19 @@ public class MovieDetailActivity extends AppCompatActivity {
     private static final String BASE_URL = "http://image.tmdb.org/t/p/";
     private static final String SIZE = "w185";
 
-    private TextView mTitle;
-    private ImageView mPoster;
-    private TextView mReleaseDate;
-    private TextView mRating;
-    private TextView mOverview;
-    private MovieDetails movieDetails;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
+
+        TextView mTitle;
+        ImageView mPoster;
+        TextView mReleaseDate;
+        TextView mRating;
+        TextView mOverview;
+        MovieDetails movieDetails;
 
         mTitle = (TextView) findViewById(R.id.movie_title);
         mPoster = (ImageView) findViewById(R.id.movie_poster);

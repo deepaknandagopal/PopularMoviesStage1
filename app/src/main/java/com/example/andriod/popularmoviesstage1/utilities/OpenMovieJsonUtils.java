@@ -1,6 +1,5 @@
 package com.example.andriod.popularmoviesstage1.utilities;
 
-import android.content.Context;
 
 import com.example.andriod.popularmoviesstage1.Adapter.MovieDetails;
 
@@ -10,30 +9,22 @@ import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
- * Created by Deepak on 9/23/2017.
+ * Helper class created for parsing the json response from the web.
  */
 
 public final class OpenMovieJsonUtils {
 
     /**
-     * This method parses JSON from a web response and returns an array of Strings
-     * describing the weather over various days from the forecast.
-     * <p/>
-     * Later on, we'll be parsing the JSON into structured data within the
-     * getFullWeatherDataFromJson function, leveraging the data we have stored in the JSON. For
-     * now, we just convert the JSON into human-readable strings.
+     * This method parses JSON from a web response and returns an ArrayList of the MovieDetails Objects array of Strings
+     * describing various properties of the Movies.
      *
-     *
-     *
-     * @return Array of Strings describing weather data
+     * @return ArrayList containing MovieDetails object
      *
      * @throws JSONException If JSON data cannot be properly parsed
      */
-    public static ArrayList<MovieDetails> getSimpleWeatherStringsFromJson(Context context, String movieDataJsonStr)
+    public static ArrayList<MovieDetails> getSimpleWeatherStringsFromJson(String movieDataJsonStr)
             throws JSONException {
 
         final String OMD_RESULTS = "results";
@@ -45,12 +36,8 @@ public final class OpenMovieJsonUtils {
         final String OMD_RATING = "vote_average";
 
         final String OMD_MESSAGE_CODE = "cod";
-        String name = null;
-        ArrayList<MovieDetails> movieDetailsList = new ArrayList<MovieDetails>();
+        ArrayList<MovieDetails> movieDetailsList = new ArrayList<>();
 
-
-        /* String array to hold each day's weather String */
-        String[] parsedWeatherData = null;
 
         JSONObject movieDataJson = new JSONObject(movieDataJsonStr);
 
@@ -72,8 +59,6 @@ public final class OpenMovieJsonUtils {
 
         JSONArray MovieDataArray = movieDataJson.getJSONArray(OMD_RESULTS);
 
-
-        long localDate = System.currentTimeMillis();
         for (int i = 0; i < MovieDataArray.length(); i++) {
             JSONObject singleMovieDetail = MovieDataArray.getJSONObject(i);
             String title = singleMovieDetail.getString(OMD_TITLE);

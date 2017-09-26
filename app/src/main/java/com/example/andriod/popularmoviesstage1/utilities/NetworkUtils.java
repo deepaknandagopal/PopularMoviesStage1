@@ -7,11 +7,12 @@ import java.net.HttpURLConnection;
 import java.util.Scanner;
 
 /**
- * Created by Deepak on 9/23/2017.
+ * Helper class created for getting response from the web.
  */
 
 public final class NetworkUtils {
 
+    @SuppressWarnings("unused")
     private static final String TAG = NetworkUtils.class.getSimpleName();
 
 

@@ -2,12 +2,12 @@ package com.example.andriod.popularmoviesstage1.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.andriod.popularmoviesstage1.R;
 import com.squareup.picasso.Picasso;
@@ -15,15 +15,16 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 /**
- * Created by Deepak on 9/25/2017.
+ * Adapter class created for the MovieDetails
  */
 
 public class MovieDetailsAdapter extends ArrayAdapter<MovieDetails> {
 
+    @SuppressWarnings("unused")
     private static final String LOG_TAG = MovieDetailsAdapter.class.getSimpleName();
     private static final String BASE_URL = "http://image.tmdb.org/t/p/";
     private static final String SIZE = "w185";
-    private Context mContext;
+    private final Context mContext;
 
     /**
      * This is our own custom constructor (it doesn't mirror a superclass constructor).
@@ -52,8 +53,9 @@ public class MovieDetailsAdapter extends ArrayAdapter<MovieDetails> {
      * @param parent The parent ViewGroup that is used for inflation.
      * @return The View for the position in the AdapterView.
      */
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         // Check if the existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(
@@ -64,10 +66,10 @@ public class MovieDetailsAdapter extends ArrayAdapter<MovieDetails> {
         MovieDetails currentMovieDetail = getItem(position);
 
         // Find the ImageView in the list_item.xml layout with the ID list_item_icon
-        ImageView iconView = (ImageView) convertView.findViewById(R.id.list_item_icon);
+        ImageView iconView = convertView.findViewById(R.id.list_item_icon);
 
         //Get the Poster Path from the MovieDetails object
-        String posterPath = currentMovieDetail.getMoviePoster();
+        String posterPath = currentMovieDetail != null ? currentMovieDetail.getMoviePoster() : null;
 
         //Load the image using picasso api
         Picasso.with(mContext).load(BASE_URL + SIZE + posterPath).into(iconView);

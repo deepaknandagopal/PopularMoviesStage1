@@ -3,14 +3,12 @@ package com.example.andriod.popularmoviesstage1.Adapter;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
-import java.util.Date;
-
 /**
  * Created by Deepak on 9/23/2017.
  *
  */
 
+@SuppressWarnings("ALL")
 public class MovieDetails implements Parcelable {
     private String title;
     private String moviePoster;

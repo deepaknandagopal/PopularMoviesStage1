@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Popular Movies App</string>
     <string name="conn_error">Please check your internet connection and try again</string>
+    <string name="movie_overview">Overview</string>
+    <string name="img_desc">Image</string>
+    <string name="sort_pop">Sort By Popularity</string>
+    <string name="sort_rat">Sort By Rating</string>
+
 </resources>
