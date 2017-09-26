@@ -19,5 +19,7 @@ Application Flow:
         - release date
         
 Note: 
-Generate the API key from themoviedb.org and Insert in the MainActivity.Java 
-in the variable "API_Key" to fetch the reponse from the web.
+Generate the API key from themoviedb.org and replace the API key in the below line
+and add the line to the gradle.properties and built the application to fetch the response from the web
+
+Example: API_KEY = "paste your API key inside this quotation"
