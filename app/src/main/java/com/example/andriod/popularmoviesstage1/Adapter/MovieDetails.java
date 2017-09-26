@@ -8,6 +8,7 @@ import java.util.Date;
 
 /**
  * Created by Deepak on 9/23/2017.
+ *
  */
 
 public class MovieDetails implements Parcelable {
@@ -96,7 +97,7 @@ public class MovieDetails implements Parcelable {
         parcel.writeInt(movieID);
     }
 
-    public final Parcelable.Creator<MovieDetails> CREATOR = new Parcelable.Creator<MovieDetails>() {
+    public static final Parcelable.Creator<MovieDetails> CREATOR = new Parcelable.Creator<MovieDetails>() {
         @Override
         public MovieDetails createFromParcel(Parcel parcel) {return new MovieDetails(parcel);}
 

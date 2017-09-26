@@ -1,6 +1,7 @@
 package com.example.andriod.popularmoviesstage1;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -27,7 +29,10 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    //Initilize the API Key here to retrieve the data from the themoviedb.org API
     private static final String API_Key = "534dc6269e7da747bd1aad7cfd13b2bb";
+
+    //URL for retrieving the movies list by popular and top-rated
     private static final String MOVIEDB_URL_POPULAR = "http://api.themoviedb.org/3/movie/popular?api_key=";
     private static final String MOVIEDB_URL_RATING = "http://api.themoviedb.org/3/movie/top_rated?api_key=";
 
@@ -47,11 +52,12 @@ public class MainActivity extends AppCompatActivity {
         mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
         mGridView = (GridView) findViewById(R.id.movies_grid);
         if(savedInstanceState == null || !savedInstanceState.containsKey("movieDataList")) {
+            //If there is no savedInstance then create a object and call loadMoviesData to fetch
             movieDetailsList = new ArrayList<MovieDetails>();
             loadMoviesData();
-
         }
         else {
+            //else retrieve the savedInstance and update the adapter
             movieDetailsList = savedInstanceState.getParcelableArrayList("movieDataList");
             updateView(movieDetailsList);
         }
@@ -63,6 +69,10 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
     }
 
+    /**
+     * This method will get tell some
+     * background method to get the movies data in the background.
+     */
     private void loadMoviesData()
     {
         showMoviesDataView();
@@ -70,17 +80,26 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This method will make the View for the movie data visible and
+     * hide the error message.
+     */
     private void showMoviesDataView()
     {
         mErrorMessageDisplay.setVisibility(View.INVISIBLE);
         mGridView.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * This method will make the error message visible and hide the Grid
+     * View.
+     */
     private void showErrorMessage(){
         mErrorMessageDisplay.setVisibility(View.VISIBLE);
         mGridView.setVisibility(View.INVISIBLE);
     }
 
+    //Async Task to fetch the data in the background
     public class FetchMovieData extends AsyncTask<String, Void, ArrayList<MovieDetails>> {
 
         @Override
@@ -103,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+            //Get the json response from the URL and parse the JSON and return the MovieDetails as ArrayList
             try {
                 String jsonMovieAPIResponse = NetworkUtils
                         .getResponseFromHttpUrl(url);
@@ -121,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<MovieDetails> movieData){
             mLoadingIndicator.setVisibility(View.INVISIBLE);
+            //Update the Gridview if the MovieDetails list is not null
             if(movieData!=null)
             {
                 showMoviesDataView();
@@ -134,15 +155,32 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Method to update the GridView and attach an adapter to it
+     * This also set an OnItemClickListner for the GridView
+     *
+     * @param movieData Arraylist of MovieDetails Object
+     */
     public void updateView(ArrayList<MovieDetails> movieData){
         movieDetailsAdapter = new MovieDetailsAdapter(this, movieData);
         //Get a reference to the gridView and attach the adapter to it
         GridView mGridView = (GridView) findViewById(R.id.movies_grid);
         mGridView.setAdapter(movieDetailsAdapter);
-        //movieDetailsAdapter.notifyDataSetChanged();
+        //Set a OnItemClickListener for the GridView attached to the Adapter
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //Get the MovieDetails Object and pass it to the new activity as parcelble object
+                MovieDetails movieDetails = movieDetailsAdapter.getItem(i);
+                Intent intent = new Intent(MainActivity.this,MovieDetailActivity.class);
+                intent.putExtra("movieDetails",movieDetails);
+                startActivity(intent);
+            }
+        });
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
         return true;

@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/error_message_display"
         android:padding="16dp"
-        android:text="Please check your internet connection and try again"
+        android:text="@string/conn_error"
         android:textSize="20sp"
         android:layout_gravity = "center"
         android:visibility="invisible"
